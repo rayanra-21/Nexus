@@ -79,9 +79,12 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
                         </p>
                       )}
                       
-                      {lastMessage && !lastMessage.isRead && lastMessage.senderId !== currentUser.id && (
-                        <Badge variant="primary" size="sm" rounded>New</Badge>
-                      )}
+                     {lastMessage && !lastMessage.isRead && lastMessage.senderId !== currentUser.id && (
+  <Badge variant="primary" className="text-xs px-2 py-0.5 rounded-full">
+    New
+  </Badge>
+)}
+
                     </div>
                   </div>
                 </div>
