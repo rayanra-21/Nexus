@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, PieChart, Filter, Search, PlusCircle } from 'lucide-react';
+import { Users, PieChart, Filter, Search, PlusCircle ,Wallet} from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -10,6 +10,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Entrepreneur } from '../../types';
 import { entrepreneurs } from '../../data/users';
 import { getRequestsFromInvestor } from '../../data/collaborationRequests';
+import { getWalletBalance } from "../../data/wallet";
 
 export const InvestorDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -50,6 +51,8 @@ export const InvestorDashboard: React.FC = () => {
     );
   };
   
+const walletBalance = getWalletBalance();
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
@@ -115,6 +118,21 @@ export const InvestorDashboard: React.FC = () => {
             </div>
           </CardBody>
         </Card>
+
+        <Card className="bg-primary-50 border border-primary-100">
+  <CardBody className="flex items-center gap-4">
+    <div className="p-3 bg-primary-100 rounded-full">
+      <Wallet size={20} className="text-primary-700" />
+    </div>
+    <div>
+      <p className="text-sm font-medium text-primary-700">Wallet Balance</p>
+      <h3 className="text-xl font-semibold text-primary-900">
+        ${walletBalance.toLocaleString()}
+      </h3>
+    </div>
+  </CardBody>
+</Card>
+
         
         <Card className="bg-secondary-50 border border-secondary-100">
           <CardBody>

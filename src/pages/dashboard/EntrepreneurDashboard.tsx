@@ -7,6 +7,7 @@ import {
   TrendingUp,
   AlertCircle,
   PlusCircle,
+  Wallet,
 } from "lucide-react";
 
 import { Button } from "../../components/ui/Button";
@@ -18,6 +19,8 @@ import { useAuth } from "../../context/AuthContext";
 import { CollaborationRequest } from "../../types";
 import { getRequestsForEntrepreneur } from "../../data/collaborationRequests";
 import { investors } from "../../data/users";
+import { getWalletBalance } from "../../data/wallet";
+
 
 import MeetingCalendar, {
   CalendarEvent,
@@ -33,6 +36,8 @@ export const EntrepreneurDashboard: React.FC = () => {
 
   const [showCalendar, setShowCalendar] = useState(false);
   const [meetingEvents, setMeetingEvents] = useState<CalendarEvent[]>([]);
+
+  const walletBalance = getWalletBalance();
 
   const confirmedMeetings = meetingEvents.filter(
     (e) => e.status === "confirmed"
@@ -96,6 +101,21 @@ export const EntrepreneurDashboard: React.FC = () => {
             </div>
           </CardBody>
         </Card>
+
+<Card className="bg-primary-50 border border-primary-100">
+  <CardBody className="flex items-center gap-4">
+    <div className="p-3 bg-primary-100 rounded-full">
+      <Wallet size={20} className="text-primary-700" />
+    </div>
+    <div>
+      <p className="text-sm font-medium text-primary-700">Wallet Balance</p>
+      <h3 className="text-xl font-semibold text-primary-900">
+        ${walletBalance.toLocaleString()}
+      </h3>
+    </div>
+  </CardBody>
+</Card>
+
 
         {/* Total Connections */}
         <Card className="bg-secondary-50 border border-secondary-100">
