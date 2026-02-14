@@ -20,6 +20,7 @@ import { CollaborationRequest } from "../../types";
 import { getRequestsForEntrepreneur } from "../../data/collaborationRequests";
 import { investors } from "../../data/users";
 import { getWalletBalance } from "../../data/wallet";
+import Walkthrough from "../../components/Walkthrough/walkthrough";
 
 
 import MeetingCalendar, {
@@ -67,8 +68,10 @@ export const EntrepreneurDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
+  <Walkthrough />
       {/* Welcome + Find Investors */}
-      <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center tour-welcome">
+
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
             Welcome, {user.name}
@@ -78,106 +81,92 @@ export const EntrepreneurDashboard: React.FC = () => {
           </p>
         </div>
 
-        <Link to="/investors">
+        <Link to="/investors"  className="tour-find-investors">
           <Button leftIcon={<PlusCircle size={18} />}>Find Investors</Button>
         </Link>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Pending Requests */}
-        <Card className="bg-primary-50 border border-primary-100">
-          <CardBody className="flex items-center gap-4">
-            <div className="p-3 bg-primary-100 rounded-full">
-              <Bell size={20} className="text-primary-700" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-primary-700">
-                Pending Requests
-              </p>
-              <h3 className="text-xl font-semibold text-primary-900">
-                {pendingRequests.length}
-              </h3>
-            </div>
-          </CardBody>
-        </Card>
-
-<Card className="bg-primary-50 border border-primary-100">
-  <CardBody className="flex items-center gap-4">
-    <div className="p-3 bg-primary-100 rounded-full">
-      <Wallet size={20} className="text-primary-700" />
-    </div>
-    <div>
-      <p className="text-sm font-medium text-primary-700">Wallet Balance</p>
-      <h3 className="text-xl font-semibold text-primary-900">
-        ${walletBalance.toLocaleString()}
-      </h3>
-    </div>
-  </CardBody>
-</Card>
-
-
-        {/* Total Connections */}
-        <Card className="bg-secondary-50 border border-secondary-100">
-          <CardBody className="flex items-center gap-4">
-            <div className="p-3 bg-secondary-100 rounded-full">
-              <Users size={20} className="text-secondary-700" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-secondary-700">
-                Total Connections
-              </p>
-              <h3 className="text-xl font-semibold text-secondary-900">
-                {
-                  collaborationRequests.filter((r) => r.status === "accepted")
-                    .length
-                }
-              </h3>
-            </div>
-          </CardBody>
-        </Card>
-
-        {/* Upcoming Meetings */}
-        <Card
-          className="bg-accent-50 border border-accent-100 cursor-pointer hover:shadow-md transition"
-          onClick={() => setShowCalendar(true)}
-        >
-          <CardBody className="flex items-center gap-4">
-            <div className="p-3 bg-accent-100 rounded-full">
-              <Calendar size={20} className="text-accent-700" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-accent-700">
-                Upcoming Meetings
-              </p>
-              <h3 className="text-xl font-semibold text-accent-900">
-                {confirmedMeetings}
-              </h3>
-            </div>
-          </CardBody>
-        </Card>
-
-        {/* Profile Views */}
-        <Card className="bg-success-50 border border-success-100">
-          <CardBody className="flex items-center gap-4">
-            <div className="p-3 bg-green-100 rounded-full">
-              <TrendingUp size={20} className="text-success-700" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-success-700">
-                Profile Views
-              </p>
-              <h3 className="text-xl font-semibold text-success-900">24</h3>
-            </div>
-          </CardBody>
-        </Card>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+  
+  <Card className="bg-primary-50 border border-primary-100 h-full">
+    <CardBody className="flex items-center gap-4 h-full">
+      <div className="p-3 bg-primary-100 rounded-full">
+        <Bell size={20} className="text-primary-700" />
       </div>
+      <div>
+        <p className="text-sm font-medium text-primary-700">Pending Requests</p>
+        <h3 className="text-xl font-semibold text-primary-900">
+          {pendingRequests.length}
+        </h3>
+      </div>
+    </CardBody>
+  </Card>
+
+  <Card className="bg-primary-50 border border-primary-100 tour-wallet">
+    <CardBody className="flex items-center gap-4 h-full">
+      <div className="p-3 bg-primary-100 rounded-full">
+        <Wallet size={20} className="text-primary-700" />
+      </div>
+      <div>
+        <p className="text-sm font-medium text-primary-700">Wallet Balance</p>
+        <h3 className="text-xl font-semibold text-primary-900">
+          ${walletBalance.toLocaleString()}
+        </h3>
+      </div>
+    </CardBody>
+  </Card>
+
+  <Card className="bg-secondary-50 border border-secondary-100 h-full">
+    <CardBody className="flex items-center gap-4 h-full">
+      <div className="p-3 bg-secondary-100 rounded-full">
+        <Users size={20} className="text-secondary-700" />
+      </div>
+      <div>
+        <p className="text-sm font-medium text-secondary-700">Total Connections</p>
+        <h3 className="text-xl font-semibold text-secondary-900">
+          {collaborationRequests.filter((r) => r.status === "accepted").length}
+        </h3>
+      </div>
+    </CardBody>
+  </Card>
+
+  <Card
+     className="bg-accent-50 border border-accent-100 cursor-pointer hover:shadow-md transition tour-calendar"
+    onClick={() => setShowCalendar(true)}
+  >
+    <CardBody className="flex items-center gap-4 h-full">
+      <div className="p-3 bg-accent-100 rounded-full">
+        <Calendar size={20} className="text-accent-700" />
+      </div>
+      <div>
+        <p className="text-sm font-medium text-accent-700">Upcoming Meetings</p>
+        <h3 className="text-xl font-semibold text-accent-900">
+          {confirmedMeetings}
+        </h3>
+      </div>
+    </CardBody>
+  </Card>
+
+  <Card className="bg-success-50 border border-success-100 h-full">
+    <CardBody className="flex items-center gap-4 h-full">
+      <div className="p-3 bg-green-100 rounded-full">
+        <TrendingUp size={20} className="text-success-700" />
+      </div>
+      <div>
+        <p className="text-sm font-medium text-success-700">Profile Views</p>
+        <h3 className="text-xl font-semibold text-success-900">24</h3>
+      </div>
+    </CardBody>
+  </Card>
+
+</div>
 
       {/* Collaboration Requests + Recommended Investors */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Collaboration Requests */}
         <div className="lg:col-span-2 space-y-4">
-          <Card>
+          <Card className="tour-collab-requests">
             <CardHeader className="flex justify-between items-center">
               <h2 className="text-lg font-medium text-gray-900">
                 Collaboration Requests
@@ -210,7 +199,7 @@ export const EntrepreneurDashboard: React.FC = () => {
 
         {/* Recommended Investors */}
         <div className="space-y-4">
-          <Card>
+          <Card className="tour-recommended-investors">
             <CardHeader className="flex justify-between items-center">
               <h2 className="text-lg font-medium text-gray-900">
                 Recommended Investors
